@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Moderation Queue</h1>
+{% for c in comments %}
+  <div style="margin: .75rem 0;">
+    <b>{{ c.user.username }}</b> on <a href="{% url 'post-detail' c.post.slug %}">{{ c.post.title }}</a>
+    <p>{{ c.text|linebreaks }}</p>
+    <a href="{% url 'approve-comment' c.pk %}">Approve</a>
+  </div>
+{% empty %}
+  <p>No comments awaiting approval 🎉</p>
+{% endfor %}
+{% endblock %}

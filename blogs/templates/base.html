@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>{% block title %}Blog{% endblock %}</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <nav>
+    <a href="{% url 'post-list' %}">Home</a>
+    {% if user.is_authenticated %}
+      <a href="{% url 'post-create' %}">New Post</a>
+      {% if user.is_staff %}<a href="{% url 'moderation-queue' %}">Moderation</a>{% endif %}
+      <a href="{% url 'logout' %}">Logout ({{ user.username }})</a>
+    {% else %}
+      <a href="{% url 'login' %}">Login</a>
+    {% endif %}
+    <a href="/admin/">Admin</a>
+  </nav>
+  <hr>
+  {% if messages %}
+    <ul>{% for m in messages %}<li>{{ m }}</li>{% endfor %}</ul>
+  {% endif %}
+  {% block content %}{% endblock %}
+</body>
+</html>
